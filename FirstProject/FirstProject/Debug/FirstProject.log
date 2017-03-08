@@ -1,5 +1,3 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (farinha.vcxproj, FirstProjectt.vcxproj, FirstProjett.vcxproj, fist.vcxproj, soco.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Source.cpp
-  LINK : C:\Users\alu201312155\Downloads\FirstProject\Debug\FirstProject.exe not found or not built by the last incremental link; performing full link
-  FirstProject.vcxproj -> C:\Users\alu201312155\Downloads\FirstProject\Debug\FirstProject.exe
-  FirstProject.vcxproj -> C:\Users\alu201312155\Downloads\FirstProject\Debug\FirstProject.pdb (Full PDB)
+﻿  Source.cpp
+  FirstProject.vcxproj -> C:\Users\olavio-lacerda\Desktop\computacaografica\FirstProject\Debug\FirstProject.exe
+  FirstProject.vcxproj -> C:\Users\olavio-lacerda\Desktop\computacaografica\FirstProject\Debug\FirstProject.pdb (Full PDB)
