@@ -1,8 +1,10 @@
+#pragma once
 #include "Object.h"
 #include "Scene.h"
 
-Object::Object() : posX(0), posY(0), posZ(0), angleX(0), angleY(0), angleZ(0)
+Object::Object() :r(0), g(0), b(0)
 {
+	Scene::addObject(this);
 }
 
 
@@ -11,24 +13,22 @@ Object::~Object()
 }
 
 
-void Object::rotate(int angleX, int angleY, int angleZ)
+void Object::rotate()
 {
-	this->angleX += angleX;
-	this->angleY += angleY;
-	this->angleZ += angleZ;
 }
 
-void Object::translata(int angleX, int angleY, int angleZ)
+void Object::translate()
 {
-	this->angleX += angleX;
-	this->angleY += angleY;
-	this->angleZ += angleZ;
+
 }
 
-void Object::scale(int angleX, int angleY, int angleZ)
+void Object::scale()
 {
-	this->angleX += angleX;
-	this->angleY += angleY;
-	this->angleZ += angleZ;
+
 }
 
+void Object::color(int r, int g, int b) {
+	this->r = r;
+	this->g = g;
+	this->b = b;
+}

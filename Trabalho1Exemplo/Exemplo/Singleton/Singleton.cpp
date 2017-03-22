@@ -24,6 +24,6 @@ Singleton* Singleton::Instance() {
 
 void Singleton::minhaFuncao()
 {
-	cout << "Minha Funcao" << endl;
+	cout << "Minha Funcao legal que nao funciona" << endl;
 	system("pause");
 }
