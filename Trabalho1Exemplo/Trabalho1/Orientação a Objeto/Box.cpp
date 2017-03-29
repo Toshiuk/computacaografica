@@ -16,7 +16,7 @@ Box::~Box()
 }
 
 void Box::draw() {
-	int max = 0, mex = 0, may = 0, mey = 0;
+	int max = -99999, mex = 99999, may = -99999, mey = 99999;
 	glColor3f(0, 0, 0);
 	glPointSize(5);
 	glBegin(GL_POINTS);
