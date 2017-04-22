@@ -33,6 +33,7 @@ void Scene::inicio() {
 
 void Scene::addObject(Object *o) {
 	gajos.push_back(o);
+
 }
 
 vector<Object*> Scene::gajos;
