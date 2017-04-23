@@ -1,7 +1,10 @@
 #include "GL\glew.h"
 #include "GL\freeglut.h"
 #include <stdio.h>
-#include <conio.h>
+#include "conio.h"
+#include <windows.h> 
+#include <stdlib.h> //Fundamental para chamada de sistemas. 
+
 
 
 float p1x, p1y;
@@ -112,6 +115,7 @@ void teclado(unsigned char c, int x, int y)
 	switch (c)
 	{
 	case 'a':
+		Beep(660, 100);
 		if (p1x > -5)
 		{
 			p1x -= 0.5f;
