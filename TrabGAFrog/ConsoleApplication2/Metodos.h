@@ -205,7 +205,7 @@ void der() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0f, 1.0f, 1.0f);
 	cout << "Termina jogo." << endl;
-	strcpy(texto, "         VOCE PERDEU!");
+	strcpy(texto, "              YOU LOSE!");
 	DesenhaTextoCentro(texto);
 	PlaySound(dead, NULL, SND_FILENAME | SND_ASYNC);
 	cont = 2;
@@ -220,7 +220,7 @@ void vic() {
 	glColor3f(cururu.r, cururu.g, cururu.b);
 	drawF();
 	glColor3f(0.0, 0.0, 0.0);
-	strcpy(texto, "         VOCE VENCEU!");
+	strcpy(texto, "               YOU WIN!");
 	DesenhaTextoCentro(texto);
 	PlaySound(winner, NULL, SND_FILENAME | SND_ASYNC);
 	cont = 1;
@@ -388,7 +388,7 @@ void initVar(void)
 	glClearColor(0.190, 0.190, 0.190, 1);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	strcpy(texto, "FROG: Chegue ao lago sem ser atingido.");
+	strcpy(texto, "FROG: Get to the lake without being hit.");
 	gluOrtho2D(-600, 600, -600, 600);
 }
 
