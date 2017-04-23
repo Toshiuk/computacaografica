@@ -9,15 +9,16 @@ int main(int argc, char **argv)
 	glutInitWindowSize(600, 600);
 	glutInitWindowPosition(600, 300);
 	glutCreateWindow("FROGG - Flávio e Olavio - CGIGA");
-	initVar();	
+	initVar();
 	glutKeyboardFunc(keyboard);
 	glutIdleFunc(colid);
 	PlaySound(snd, NULL, SND_LOOP | SND_ASYNC);
 	if (cont == 1) {
 		glutDisplayFunc(vic);
 	}
-	else if(cont == 2) {
-		glutDisplayFunc(der); }
+	else if (cont == 2) {
+		glutDisplayFunc(der);
+	}
 	else {
 		glutDisplayFunc(draw);
 	}

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include "GL\glew.h"
 #include "GL\freeglut.h"
@@ -14,12 +14,12 @@
 using namespace std;
 
 //variaveis
-GLfloat win;
+int cont = 0;
 char texto[50];
 LPCWSTR snd = L"..\\snd\\sound.WAV";
 LPCWSTR dead = L"..\\snd\\dead.wav";
 LPCWSTR winner = L"..\\snd\\win.wav";
-int cont = 0;
+GLfloat sizes[2], step;
 
 //manipula vetor
 vector<Car*> carros;
@@ -27,164 +27,149 @@ void addCar(Car *c) {
 	carros.push_back(c);
 }
 
+//instancia sapo
+Frog cururu(-35.0, -530.0, 35.0, -600.0, 14.0);
+//fimsapo
+
+//instancia carrros
+Car c1(-600.0, -100.0, -500.0, -150.0, 22.0);
+Car c2(-600.0, -200.0, -400.0, -250.0, 4.0);
+Car c3(-600.0, -300.0, -500.0, -350.0, 18.0);
+Car c4(-600.0, -400.0, -400.0, -450.0, 16.0);
+Car c5(-600.0, 100.0, -500.0, 50.0, 18.0);
+Car c6(-600.0, 200.0, -400.0, 150.0, 12.0);
+Car c7(-600.0, 270.0, -500.0, 225.0, 14.0);
+//fimcarro
+
+//fim variaveis
+
 //escrever na tela
 void DesenhaTexto(char *string)
 {
 	glPushMatrix();
-	// Posição no universo onde o texto será colocado          
-	glRasterPos2f(-win*0.60, win - (win*0.08));
-	// Exibe caracter a caracter
+	glRasterPos2f(-450.0, 525.0);
+	while (*string)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *string++);
+	glPopMatrix();
+}
+void DesenhaTextoCentro(char *string)
+{
+	glPushMatrix();
+	glRasterPos2f(-300.0, 50.0);
 	while (*string)
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *string++);
 	glPopMatrix();
 }
 //fim escrever na tela
 
-//func condições
-void der() {
-	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0f, 1.0f, 1.0f);
-	strcpy(texto, "         VOCE PERDEU!");
-	DesenhaTexto(texto);
-	PlaySound(dead, NULL, SND_FILENAME | SND_ASYNC);
-	cont = 2;
-	glutSwapBuffers();
-	system("pause");
-}
 
-void vic() {
-	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0f, 1.0f, 1.0f);
-	cout << "Termina jogo." << endl;
-	strcpy(texto, "         VOCE VENCEU!");
-	DesenhaTexto(texto);
-	PlaySound(winner, NULL, SND_FILENAME | SND_ASYNC);
-	cont = 1;
-	glutSwapBuffers();
-	system("pause");
-}
-//fim func condicoes
-
-//instancia sapo
-Frog cururu(50.0, -550.0, -50.0, -600.0, 15.0);
-//fimsapo
-
-//instancia carrros
-Car c1(60.0, -400.0, -60.0, -450.0, 5.0);
-Car c2(50.0, -300.0, -60.0, -350.0, 2.0);
-Car c3(40.0, -200.0, -60.0, -250.0, 4.0);
-Car c4(30.0, -100.0, -60.0, -150.0, 7.0);
-Car c5(60.0, 50.0, -60.0, 0.0, 8.0);
-Car c6(60.0, 150.0, -60.0, 100.0, 3.0);
-Car c7(60.0, 250.0, -60.0, 200.0, 6.0);
-//fimcarro
-
-//desenha
-void draw() {
-	//add car no carros
-	addCar(&c1);
-	addCar(&c2);
-	addCar(&c3);
-	addCar(&c4);
-	addCar(&c5);
-	addCar(&c6);
-	addCar(&c7);
-	//fim add car no carros
-
-	//desenhandooo
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	//desenha limite
-	glColor3f(1.0, 1.0, 1.0);
-	glBegin(GL_LINES);
-	glVertex2d(-599.0 / 600, 300.0 / 600);
-	glVertex2d(599.0 / 600, 300.0 / 600);
-	glEnd();
-
-	glColor3f(1.0, 1.0, 1.0);
-	glBegin(GL_LINES);
-	glVertex2d(-599.0 / 600, -480.0 / 600);
-	glVertex2d(599.0 / 600, -480.0 / 600);
-	glEnd();
-
-	glColor3f(1.0, 1.0, 0.0);
-	glBegin(GL_LINES);
-	glVertex2d(-599.0 / 600, 0.0 / 600);
-	glVertex2d(599.0 / 600, 0.0 / 600);
-	glEnd();
-
-	glColor3f(1.0, 1.0, 0.0);
-	glBegin(GL_LINES);
-	glVertex2d(-599.0 / 600, -150.0 / 600);
-	glVertex2d(599.0 / 600, -150.0 / 600);
-	glEnd();
-	//desenha limite
-
-
-	//sapo cururu desenho 
-	glColor3f(cururu.r, cururu.g, cururu.b);
-	//braço esquerdo
+//desenha sapo
+void drawF() {
+	//	//limite sapo para guia e colisÃ£o
+	//	glBegin(GL_POLYGON);
+	//	glVertex2d(cururu.vx, cururu.vy);
+	//	glVertex2d(cururu.vx, cururu.vy1);
+	//	glVertex2d(cururu.vx1, cururu.vy1);
+	//	glVertex2d(cururu.vx1, cururu.vy);
+	//	glEnd();
+	//	//fim limite sapo
+		//braÃ§o esquerdo1
 	glBegin(GL_POLYGON);
-	glVertex2d((cururu.vx1 + 2.0) / 600, cururu.vy / 600); //A
-	glVertex2d((cururu.vx1 + 2.0) / 600, (cururu.vy1 + 27.0) / 600);//B1
-	glVertex2d((cururu.vx1 + 24.0) / 600, (cururu.vy1 + 27.0) / 600);//A1
-	glVertex2d((cururu.vx1 + 18.0) / 600, cururu.vy / 600); //B
-	glEnd();
-	//braço direito
-	glBegin(GL_POLYGON);
-	glVertex2d((cururu.vx - 18.0) / 600, cururu.vy / 600);//I
-	glVertex2d((cururu.vx - 24.0) / 600, (cururu.vy1 + 27.0) / 600);//L
-	glVertex2d((cururu.vx - 2.0) / 600, (cururu.vy1 + 27.0) / 600);//K
-	glVertex2d((cururu.vx - 2.0) / 600, cururu.vy / 600);//J
-	glEnd();
-	//corpo
-	glBegin(GL_POLYGON);
-	glVertex2d((cururu.vx1 + 18.0) / 600, (cururu.vy - 15.0) / 600);//C
-	glVertex2d((cururu.vx1 + 18.0) / 600, (cururu.vy1 + 10.0) / 600);//V
-	glVertex2d((cururu.vx - 18.0) / 600, (cururu.vy1 + 10.0) / 600);//Q
-	glVertex2d((cururu.vx - 18.0) / 600, (cururu.vy - 15.0) / 600);//H
+	glVertex2d(cururu.vx + 4, (cururu.vy - 7));
+	glVertex2d(cururu.vx + 4, (cururu.vy - 30.0));
+	glVertex2d((cururu.vx + 14.0), (cururu.vy - 30.0));
+	glVertex2d((cururu.vx + 14.0), (cururu.vy - 7));
 	glEnd();
 
-	//perna esquerda
+	////braÃ§o direito2
 	glBegin(GL_POLYGON);
-	glVertex2d((cururu.vx1 + 2.0) / 600, (cururu.vy1 + 17.0) / 600);//Y
-	glVertex2d((cururu.vx1 + 2.0) / 600, cururu.vy1 / 600);//W
-	glVertex2d((cururu.vx1 + 18.0) / 600, cururu.vy1 / 600);//X
-	glVertex2d((cururu.vx1 + 24.0) / 600, (cururu.vy1 + 17.0) / 600);//Z
+	glVertex2d((cururu.vx1 - 14.0), (cururu.vy - 7));
+	glVertex2d((cururu.vx1 - 14.0), (cururu.vy - 30.0));
+	glVertex2d((cururu.vx1 - 4), (cururu.vy - 30.0));
+	glVertex2d((cururu.vx1 - 4), (cururu.vy - 7));
 	glEnd();
-	//perna direita
+
+	////perna esquerda3
 	glBegin(GL_POLYGON);
-	glVertex2d((cururu.vx - 24.0) / 600, (cururu.vy1 + 17.0) / 600);//M
-	glVertex2d((cururu.vx - 18.0) / 600, cururu.vy1 / 600);//P
-	glVertex2d((cururu.vx - 2.0) / 600, cururu.vy1 / 600);//O
-	glVertex2d((cururu.vx - 2.0) / 600, (cururu.vy1 + 17.0) / 600);//N
+	glVertex2d((cururu.vx), (cururu.vy1 + 20.0));
+	glVertex2d((cururu.vx), cururu.vy1);
+	glVertex2d((cururu.vx + 10.0), cururu.vy1);
+	glVertex2d((cururu.vx + 10.0), (cururu.vy1 + 20.0));
 	glEnd();
-	//cabeça
+
+	////perna direita4
 	glBegin(GL_POLYGON);
-	glVertex2d((cururu.vx1 + 42.0) / 600, (cururu.vy - 5.0) / 600);//E
-	glVertex2d((cururu.vx1 + 42.0) / 600, (cururu.vy - 15.0) / 600);//D
-	glVertex2d((cururu.vx - 42.0) / 600, (cururu.vy - 15.0) / 600);//G
-	glVertex2d((cururu.vx - 42.0) / 600, (cururu.vy - 5.0) / 600);//F
+	glVertex2d((cururu.vx1 - 10.0), (cururu.vy1 + 20.0));
+	glVertex2d((cururu.vx1 - 10.0), cururu.vy1);
+	glVertex2d((cururu.vx1), cururu.vy1);
+	glVertex2d((cururu.vx1), (cururu.vy1 + 20.0));
 	glEnd();
-	//cauda
+
+	//ombros5
 	glBegin(GL_POLYGON);
-	glVertex2d((cururu.vx1 + 44.0) / 600, (cururu.vy1 + 10.0) / 600);//U
-	glVertex2d((cururu.vx1 + 44.0) / 600, (cururu.vy1 + 3.0) / 600);//T
-	glVertex2d((cururu.vx - 44.0) / 600, (cururu.vy1 + 3.0) / 600);//S
-	glVertex2d((cururu.vx - 44.0) / 600, (cururu.vy1 + 10.0) / 600);//R
+	glVertex2d((cururu.vx + 4.0), (cururu.vy - 30.0));
+	glVertex2d((cururu.vx + 4.0), cururu.vy1 + 30.0);
+	glVertex2d((cururu.vx1 - 5.0), cururu.vy1 + 30.0);
+	glVertex2d((cururu.vx1 - 5.0), (cururu.vy - 30.0));
 	glEnd();
+
+	////corpo6
+	glBegin(GL_POLYGON);
+	glVertex2d((cururu.vx + 20.0), (cururu.vy - 20.0));
+	glVertex2d((cururu.vx + 20.0), (cururu.vy1 + 10.0));
+	glVertex2d((cururu.vx1 - 20.0), (cururu.vy1 + 10.0));
+	glVertex2d((cururu.vx1 - 20.0), (cururu.vy - 20.0));
+	glEnd();
+
+	////cabeÃ§a7
+	glBegin(GL_POLYGON);
+	glVertex2d((cururu.vx + 26.0), (cururu.vy - 10.0));
+	glVertex2d((cururu.vx + 26.0), (cururu.vy - 20.0));
+	glVertex2d((cururu.vx1 - 26.0), (cururu.vy - 20.0));
+	glVertex2d((cururu.vx1 - 26.0), (cururu.vy - 10.0));
+	glEnd();
+
+	////cauda8
+	glBegin(GL_POLYGON);
+	glVertex2d((cururu.vx + 30.0), (cururu.vy1 + 10.0));
+	glVertex2d((cururu.vx + 30.0), (cururu.vy1 + 4.0));
+	glVertex2d((cururu.vx1 - 30.0), (cururu.vy1 + 4.0));
+	glVertex2d((cururu.vx1 - 30.0), (cururu.vy1 + 10.0));
+	glEnd();
+
+	//coxas9
+	glBegin(GL_POLYGON);
+	glVertex2d((cururu.vx + 10.0), (cururu.vy1 + 20.0));
+	glVertex2d((cururu.vx + 10.0), cururu.vy1 + 10.0);
+	glVertex2d((cururu.vx1 - 10.0), cururu.vy1 + 10.0);
+	glVertex2d((cururu.vx1 - 10.0), (cururu.vy1 + 20.0));
+	glEnd();
+
 	//fim sapo
+}
+//fim desenhasapo
 
+//desenhacarro
+void drawC() {
+	//add car no carros
+	addCar(&c7);
+	addCar(&c6);
+	addCar(&c5);
+	addCar(&c4);
+	addCar(&c3);
+	addCar(&c2);
+	addCar(&c1);
+	//fim add car no carros
 	//carros
 	for (int i = 0; i < carros.size(); i++) {
 		//desenha carro
 		glColor3f(carros[i]->r, carros[i]->g, carros[i]->b);
 		//corpo
 		glBegin(GL_POLYGON);
-		glVertex2d(carros[i]->vx / 600, carros[i]->vy / 600);
-		glVertex2d(carros[i]->vx / 600, carros[i]->vy1 / 600);
-		glVertex2d(carros[i]->vx1 / 600, carros[i]->vy1 / 600);
-		glVertex2d(carros[i]->vx1 / 600, carros[i]->vy / 600);
+		glVertex2d(carros[i]->vx, carros[i]->vy);
+		glVertex2d(carros[i]->vx, carros[i]->vy1);
+		glVertex2d(carros[i]->vx1, carros[i]->vy1);
+		glVertex2d(carros[i]->vx1, carros[i]->vy);
 
 		glEnd();
 
@@ -195,92 +180,207 @@ void draw() {
 		carros[i]->vy1 += 0.0;
 		//fimmovimenta carros
 
-		//tratamento de colisão com parede
+		//tratamento de colisÃ£o com parede
 		if (carros[i]->vx > 600.0 || carros[i]->vx1 < -600.0) {
-			carros[i]->vel = carros[i]->vel*-1;
+			if (i % 2 == 0) {
+				carros[i]->vx = -600.0;
+				carros[i]->vx1 = -500.0;
+			}
+			else {
+				carros[i]->vx = -600.0;
+				carros[i]->vx1 = -400.0;
+			}
+			//carros[i]->vel = carros[i]->vel*-1;
 			//cout << "ai ";
 			break;
 		}
-		////fim colisão parede
+		////fim colisÃ£o parede
 	}
 	//fim carros
+}
+//fim desenha carro
+
+//func condiÃ§Ãµes
+void der() {
+	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(1.0f, 1.0f, 1.0f);
+	cout << "Termina jogo." << endl;
+	strcpy(texto, "         VOCE PERDEU!");
+	DesenhaTextoCentro(texto);
+	PlaySound(dead, NULL, SND_FILENAME | SND_ASYNC);
+	cont = 2;
+	glutSwapBuffers();
+	system("pause");
+}
+
+void vic() {
+	glClearColor(0.155, 0.545, 0.655, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+	cout << "Termina jogo." << endl;
+	glColor3f(cururu.r, cururu.g, cururu.b);
+	drawF();
+	glColor3f(0.0, 0.0, 0.0);
+	strcpy(texto, "         VOCE VENCEU!");
+	DesenhaTextoCentro(texto);
+	PlaySound(winner, NULL, SND_FILENAME | SND_ASYNC);
+	cont = 1;
+	glutSwapBuffers();
+	system("pause");
+}
+//fim func condicoes
+
+
+//desenha
+void draw() {
+	glClear(GL_COLOR_BUFFER_BIT);
+	glGetFloatv(GL_LINE_WIDTH_RANGE, sizes);
+	glGetFloatv(GL_LINE_WIDTH_GRANULARITY, &step);
+
+	glLineWidth(10);
+
+	//faixas amarelas
+	glEnable(GL_LINE_STIPPLE);
+	glLineStipple(5, 0x00FF);
+	glColor3f(1.0, 1.0, 0.0);
+	glBegin(GL_LINES);
+	glVertex2d(-600.0, 0.0);
+	glVertex2d(600.0, 0.0);
+	glEnd();
+
+	glColor3f(1.0, 1.0, 0.0);
+	glBegin(GL_LINES);
+	glVertex2d(-600.0, -100.0);
+	glVertex2d(600.0, -100.0);
+	glEnd();
+	glDisable(GL_LINE_STIPPLE);
+	//fim faixas
+
+	//laguinho
+	glColor3f(0.155, 0.545, 0.655);
+	glBegin(GL_POLYGON);
+	glVertex2d(-600.0, 600.0);
+	glVertex2d(-600.0, 300.0);
+	glVertex2d(600.0, 300.0);
+	glVertex2d(600.0, 600.0);
+	glEnd();
+	//fimlago
+
+	//terra cima e baixo
+	glColor3f(0.244, 0.222, 0.141);
+	glBegin(GL_POLYGON);
+	glVertex2d(-600.0, 375.0);
+	glVertex2d(-600.0, 300.0);
+	glVertex2d(600.0, 300.0);
+	glVertex2d(600.0, 375.0);
+	glEnd();
+
+	glColor3f(0.244, 0.222, 0.141);
+	glBegin(GL_POLYGON);
+	glVertex2d(-600.0, -470.0);
+	glVertex2d(-600.0, -600.0);
+	glVertex2d(600.0, -600.0);
+	glVertex2d(600.0, -470.0);
+	glEnd();
+	//fimterra
+
+	//desenha limite pista branco
+	glLineWidth(15);
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_LINES);
+	glVertex2d(-600.0, 300.0);
+	glVertex2d(600.0, 300.0);
+	glEnd();
+
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_LINES);
+	glVertex2d(-600.0, -480.0);
+	glVertex2d(600.0, -480.0);
+	glEnd();
+	//fim desenha limite pista
+
+	//elementos desenho
+	glColor3f(cururu.r, cururu.g, cururu.b);
+	drawF(); //sapo
+	glColor3f(0.0f, 0.0f, 0.0f);
+	drawC(); //carros
 	DesenhaTexto(texto);
 	glutSwapBuffers();
 	glFlush();
 	glutPostRedisplay();
 }
 
-void drawfim() {
-	glClear(GL_COLOR_BUFFER_BIT);
-	strcpy(texto, "         VOCE VENCEU!");
-	glColor3f(1.0f, 1.0f, 1.0f);
-	DesenhaTexto(texto);
-	glFlush();
-	glutSwapBuffers();
-}
 
-//colisão entre objetos
+//colisÃ£o entre objetos
 void colid()
 {
-	//começo
+	//comeÃ§o
 	for (int i = 0; i < carros.size(); i++) {
-		if (cururu.vx1 >= carros[i]->vx1 && cururu.vx1 <= carros[i]->vx) {
-			if (cururu.vy >= carros[i]->vy1 && cururu.vy <= carros[i]->vy) {
-				cout << "ops me acidentei 1 :c" << endl;
-				//cont = 1;
-				cururu.r = 1;
-				cururu.g = 0;
-				cururu.b = 0;
+		if (carros[i]->vx >= cururu.vx && carros[i]->vx <= cururu.vx1) {
+			if (carros[i]->vy >= cururu.vy1 && carros[i]->vy <= cururu.vy) {
+				cout << "ops 1" << endl;
 				der();
-				break;
 			}
 		}
 		else {
-			if (cururu.vx >= carros[i]->vx1 && cururu.vx <= carros[i]->vx) {
-				if (cururu.vy >= carros[i]->vy1 && cururu.vy <= carros[i]->vy) {
-					cout << "ops me acidentei 2 :c" << endl;
-					//cont = 1;
-					cururu.r = 1;
-					cururu.g = 0;
-					cururu.b = 0;
+			if (carros[i]->vx1 >= cururu.vx && carros[i]->vx1 <= cururu.vx1) {
+				if (carros[i]->vy >= cururu.vy1 && carros[i]->vy <= cururu.vy) {
+					cout << "ops 2" << endl;
 					der();
-					break;
 				}
 			}
 			else {
-				if (cururu.vx1 >= carros[i]->vx1 && cururu.vx1 <= carros[i]->vx) {
-					if (cururu.vy1 >= carros[i]->vy1 && cururu.vy1 <= carros[i]->vy) {
-						cout << "ops me acidentei 3 :c" << endl;
-						//cont = 1;
-						cururu.r = 1;
-						cururu.g = 0;
-						cururu.b = 0;
+				if (carros[i]->vx >= cururu.vx && carros[i]->vx <= cururu.vx1) {
+					if (carros[i]->vy1 >= cururu.vy1 && carros[i]->vy1 <= cururu.vy) {
+						cout << "ops 3" << endl;
 						der();
-						break;
 					}
 				}
 				else {
-					if (cururu.vx >= carros[i]->vx1 && cururu.vx <= carros[i]->vx) {
-						if (cururu.vy1 >= carros[i]->vy1 && cururu.vy1 <= carros[i]->vy) {
-							cout << "ops me acidentei 4 :c" << endl;
-							//cont = 1;
-							cururu.r = 1;
-							cururu.g = 0;
-							cururu.b = 0;
+					if (carros[i]->vx1 >= cururu.vx && carros[i]->vx1 <= cururu.vx1) {
+						if (carros[i]->vy1 >= cururu.vy1 && carros[i]->vy1 <= cururu.vy) {
+							cout << "ops 4" << endl;
 							der();
-							break;
+						}
+					}
+				}
+			}
+		}
+		if (cururu.vx >= carros[i]->vx && cururu.vx <= carros[i]->vx1) {
+			if (cururu.vy >= carros[i]->vy1 && cururu.vy <= carros[i]->vy) {
+				cout << "ops 5" << endl;
+				der();
+			}
+		}
+		else {
+			if (cururu.vx1 >= carros[i]->vx && cururu.vx1 <= carros[i]->vx1) {
+				if (cururu.vy >= carros[i]->vy1 && cururu.vy <= carros[i]->vy) {
+					cout << "ops 6" << endl;
+					der();
+				}
+			}
+			else {
+				if (cururu.vx >= carros[i]->vx && cururu.vx <= carros[i]->vx1) {
+					if (cururu.vy1 >= carros[i]->vy1 && cururu.vy1 <= carros[i]->vy) {
+						cout << "ops 7" << endl;
+						der();
+					}
+				}
+				else {
+					if (cururu.vx1 >= carros[i]->vx && cururu.vx1 <= carros[i]->vx1) {
+						if (cururu.vy1 >= carros[i]->vy1 && cururu.vy1 <= carros[i]->vy) {
+							cout << "ops 8" << endl;
+							der();
 						}
 					}
 				}
 			}
 		}
 	}
-
-	//fim
 	glutPostRedisplay();
+	//fim
+
 }
-//colisão entre objetos
+//colisÃ£o entre objetos
 
 //init
 void initVar(void)
@@ -288,9 +388,8 @@ void initVar(void)
 	glClearColor(0.190, 0.190, 0.190, 1);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	win = 0.8;
-	strcpy(texto, "FROG: Consegue atravessar?");
-
+	strcpy(texto, "FROG: Chegue ao lago sem ser atingido.");
+	gluOrtho2D(-600, 600, -600, 600);
 }
 
 //teclado
@@ -299,7 +398,6 @@ void keyboard(unsigned char c, int x, int y)
 	switch (c)
 	{
 	case 'a':
-		//Beep(750, 150);
 		if (cururu.vx1 > -600.0)
 		{
 			cururu.vx -= cururu.vel;
@@ -307,7 +405,6 @@ void keyboard(unsigned char c, int x, int y)
 		}
 		break;
 	case 'd':
-		//Beep(750, 150);
 		if (cururu.vx < 600.0)
 		{
 			cururu.vx += cururu.vel;
@@ -315,7 +412,6 @@ void keyboard(unsigned char c, int x, int y)
 		}
 		break;
 	case 'w':
-		//Beep(750, 150);
 		if (cururu.vy < 600.0)
 		{
 			cururu.vy += cururu.vel;
@@ -323,7 +419,6 @@ void keyboard(unsigned char c, int x, int y)
 		}
 		break;
 	case 's':
-		//Beep(750, 150);
 		if (cururu.vy1 > -600.0)
 		{
 			cururu.vy -= cururu.vel;
@@ -331,7 +426,7 @@ void keyboard(unsigned char c, int x, int y)
 		}
 		break;
 	}
-	if (cururu.vy1 > 300.0 && cururu.vy > 300.0) {
+	if (cururu.vy1 > 375.0) {
 		vic();
 	}
 }
